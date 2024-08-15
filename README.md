@@ -75,7 +75,6 @@ python xview2_training_v5.py --train_data ./processed_data --train_csv ./csv --t
 ```
  Currently model is set to train for only 100 epochs. The idea is to monitor the performance and set the learning rate and other parameters accordingly.
 
-### Additional Note
-Jupyter Colab notebook has been added [here](./Notebook.ipynb). Refer the same for implementation guidance.
+
 
 
