@@ -1,0 +1,82 @@
+GPU 
+
+https://towardsdatascience.com/tensorflow-gpu-installation-made-easy-ubuntu-version-4260a52dd7b0
+for gpu guide
+
+# Check for Cuda version installed for corresponding installation
+# https://www.tensorflow.org/install/source_windows 
+# If all SAT use : conda create --name xview2_gpu tensorflow-gpu
+# otherwise use below code of custom version of tf-gpu eg : pip install numpy tensorflow-gpu==1.14
+######################################################################################################################
+#Setting up conda environment and installing required packages
+
+cd \code\directory
+conda -V
+conda update conda
+conda create -n xview2 python=3.7 anaconda
+conda activate xview2 && conda install pip
+pip install numpy tensorflow
+## pip install numpy tensorflow-gpu && conda install cupy
+pip install opencv-contrib-python
+#pip install Shapely-1.6.4.post1-cp36-cp36m-win_amd64.whl
+#pip install -r requirements.txt
+conda install -n xview2 shapely
+conda install -n xview2 -c conda-forge keras
+pip install -r requirements.txt
+
+
+# Generating dataset for classification
+# Create (2 folders) ./csv and ./processed_data alongside xbdDataset folder before running process_data.py script
+# skip this step if already done
+
+##python process_data.py --input_dir ./Dataset --output_dir ./processed_data --output_dir_csv ./csv
+python process_data.py --input_dir ./Dataset --output_dir ./processed_data --output_dir_csv ./csv --val_split_pct 0.1
+
+# Training dataset
+##python xview2_training_v2.py --train_data ./processed_data --train_csv ./csv
+python xview2_training_v3.py --train_data ./processed_data --train_csv ./csv --test_data ./processed_data --test_csv ./csv
+
+#######Finale training commands##########
+
+python xview2_training_v5.py --train_data ./processed_data --train_csv ./csv --test_data ./processed_data --test_csv ./csv --model_out ./output
+#Loading a saved model
+python xview2_training_v5.py --train_data ./processed_data --train_csv ./csv --test_data ./processed_data --test_csv ./csv --model_in ./output/epoch_1.h5 --model_out ./output --start_epoch 1
+
+#############################################################################################################################
+#### downloading via git
+
+conda install git
+git clone https://ham952:Pass######%23@github.com/ham952/xbd_training.git
+
+
+#### Addtional Commands for conda environment
+
+source activate yourenvname
+conda info -e
+source deactivate
+conda remove -n yourenvname -all
+## Jupyter Colab notebook
+# Firefix Browser Settings
+about:config
+network.websocket.allowInsecureFromHTTPS
+
+#conda update nbconvert
+pip install jupyter_http_over_ws
+jupyter serverextension enable —-py jupyter_http_over_ws
+#jupyter notebook —-NotebookApp.allow_origin='https://colab.research.google.com' —-port=8888 —-NotebookApp.port_retries=0
+jupyter notebook —-NotebookApp.allow_origin='https://colab.research.google.com' —-port=8888 —-no-browser
+
+pip install --upgrade jupyter_http_over_ws>=0.0.1a3 && jupyter serverextension enable --py jupyter_http_over_ws
+
+
+
+
+
+
+
+
+Results 
+[INFO] total training images : 1000
+[INFO] total test images : 100
+Epoch 10/10
+16/16 [==============================] - 112s 7s/step - loss: 1.6437 - accuracy: 0.5550 - f1: 0.5361 - val_loss: 1.0865 - val_accuracy: 0.6900 - val_f1: 0.6697

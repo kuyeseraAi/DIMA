@@ -1,0 +1,13 @@
+GPU based installations
+######################################################################################################################
+#Setting up conda environment and installing required packages
+
+cd \code\directory
+conda -V
+conda update conda
+conda create --name xview2_gpu tensorflow-gpu
+conda activate xview2_gpu && conda install pip
+conda install -n xview2 shapely
+conda install -n xview2 -c conda-forge keras
+pip install opencv-contrib-python
+conda install git
